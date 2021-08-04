@@ -1,10 +1,13 @@
 package com.licious.app.repository;
 
 import com.licious.app.model.Composition;
+import com.licious.app.model.Ingredient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface CompositionsRepository extends JpaRepository<Composition,Integer> {
-
+    public Optional<Composition> findOneByName(String name);
 }

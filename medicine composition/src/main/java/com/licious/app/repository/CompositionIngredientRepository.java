@@ -21,4 +21,13 @@ public interface CompositionIngredientRepository extends JpaRepository<Compositi
             "composition_ingredients join ingredients on ingredient_id=ingredients.id where composition_id=?1",
             nativeQuery = true)
     public List<Tuple> findAllIngredientByCompostionId(int compositionId);
+
+    @Query(value="select distinct composition_ingredients.composition_id from compositions \n" +
+            "   inner join composition_ingredients on compositions.id=composition_ingredients.composition_id\n" +
+            "   inner join molecule_ingredients on composition_ingredients.ingredient_id=molecule_ingredients.ingredient_id\n" +
+            "   inner join molecules on molecule_ingredients.molecule_id=molecules.id\n" +
+            "   where (molecule_ingredients.ingredient_id=?1 and strength=?2 and unit=?3 and molecules.rx_required=?4);",
+    nativeQuery = true)
+    public List<Integer> findAllCompositionsByIngredientMoleculeDetails(int ingredientId, float Strength,
+                                                                        String Unit,boolean rex_required);
 }

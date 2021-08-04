@@ -17,7 +17,7 @@ CREATE TABLE composition_ingredients(id INT AUTO_INCREMENT,
  composition_id INT,
  ingredient_id INT,
  unit VARCHAR(40),
- strength Decimal,
+ strength Float,
  PRIMARY KEY(id),
  FOREIGN KEY(composition_id) REFERENCES compositions(id) ON DELETE SET NULL,
  FOREIGN KEY(ingredient_id) REFERENCES ingredients(id) ON DELETE SET NULL
@@ -31,8 +31,13 @@ CREATE TABLE molecule_ingredients(id INT AUTO_INCREMENT,
     FOREIGN KEY(ingredient_id) REFERENCES ingredients(id) ON DELETE SET NULL
 
 );
-alter table composition_ingredients change strength strength Float;
+
 alter table molecules change rx_required rx_required BOOLEAN NOT NULL;
+alter table compositions change name name TEXT unique;
+
+insert into ingredients(name) values('aspirin');
+insert into ingredients(name) values('amoxicillin');
+
 insert into compositions(name) value('c1');
 insert into compositions(name) value('c2');
 
@@ -52,11 +57,31 @@ select * from molecules;
 commit;
 
 select count(ingredient_id) from composition_ingredients group by composition_id;
-select name,unit,strength,ingredient_id from composition_ingredients join ingredients on ingredient_id=ingredients.id where composition_id=1;
+
+select name as ingredientName,unit,strength,ingredient_id from composition_ingredients
+ join ingredients on ingredient_id=ingredients.id where composition_id=1;
+
+
 select molecule_id,group_concat(ingredient_id) from molecule_ingredients join molecules on molecule_id=molecules.id group by molecule_id;
 
 select * from molecules join molecule_ingredients on molecules.id=molecule_ingredients.molecule_id;
 
+select * from composition_ingredients where unit="MG" and strength=50 and ingredient_id=1;
+
+select distinct composition_ingredients.composition_id from compositions 
+   inner join composition_ingredients on compositions.id=composition_ingredients.composition_id
+   inner join molecule_ingredients on composition_ingredients.ingredient_id=molecule_ingredients.ingredient_id
+   inner join molecules on molecule_ingredients.molecule_id=molecules.id
+   where (molecule_ingredients.ingredient_id=1 and strength=80 and molecules.rx_required=true);
+
+
+/*
+  SELECT * FROM compositions 
+INNER JOIN composition_ingredients ON compositions.id = composition_ingredients.composition_id
+INNER JOIN molecule_ingredients ON composition_ingredients.ingredient_id = molecule_ingredients.ingredient_id
+INNER JOIN molecules ON molecule_ingredients.molecule_id = molecules.id
+WHERE (molecule_ingredients.ingredient_id=1 AND strength=200 AND molecules.rx_required = false);
+*/
 
 /*
 composition_ingredients 

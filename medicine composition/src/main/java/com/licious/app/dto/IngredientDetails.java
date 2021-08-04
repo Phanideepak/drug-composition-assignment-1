@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class IngredientDetails {
-    String ingredientName;
+    String name;
     float strength;
     String unit;
 }

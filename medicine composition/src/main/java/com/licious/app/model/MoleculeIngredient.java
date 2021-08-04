@@ -13,6 +13,7 @@ import javax.persistence.*;
 @ToString
 public class MoleculeIngredient {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="molecule_id",referencedColumnName = "id")
