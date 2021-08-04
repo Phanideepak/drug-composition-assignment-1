@@ -5,7 +5,7 @@ import com.licious.app.dto.response.CompositionDetailsDTO;
 import com.licious.app.dto.IngredientDetails;
 import com.licious.app.model.*;
 import com.licious.app.repository.*;
-import com.licious.app.utils.Utils;
+import com.licious.app.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,8 @@ public class CompositionMoleculeService {
     private MoleculeIngredientRepository moleculeIngredientRepository;
     @Autowired
     private CompositionsRepository compositionsRepository;
-    
+
+    //get details of all ingredients, molecule of given composition
     public CompositionDetailsDTO getCompositionDetailsByCompositionId(int compositionId){
         CompositionDetailsDTO compositionDetailsDTO=new CompositionDetailsDTO();
 
@@ -48,6 +49,10 @@ public class CompositionMoleculeService {
 
         return compositionDetailsDTO;
     }
+
+    // find the molecule that has same ingredients as given composition.
+    // This method takes ingredientIds of given composition as parameter
+    //It returns the molecule that has all the ingredients of given composition.
     public Molecule findMoleculeWithGivenIngredients(List<Integer> ingredientIds){
 
         List<Molecule> moleculeList=moleculesRepository.findAll();
@@ -64,6 +69,8 @@ public class CompositionMoleculeService {
         }
       return null;
     }
+
+    // get all composition that contains given ingredient and dosage.
     public List<Composition> getAllCompositionsFilteredByIngrediantDetails(String ingredientName, float strength,String unit){
         int ingredientId=ingredientsRepository.findOneByName(ingredientName).get().getId();
         List<Integer> compositionIds=compositionIngredientRepository.
@@ -75,6 +82,9 @@ public class CompositionMoleculeService {
         }
         return compositionList;
     }
+
+    /* get all compositions that contains given ingredient with given dosage and molecule with
+        given rex_required value */
     public List<Composition> getAllCompositionFilteredByIngredientMoleculeDetails(String ingredientName, float strength,String unit,
                                                                                   boolean rex_required){
         int ingredientId=ingredientsRepository.findOneByName(ingredientName).get().getId();
@@ -87,7 +97,7 @@ public class CompositionMoleculeService {
         }
         return compositionList;
     }
-
+    // adding new compositions to the database.
     public String addCompositonMoleculeDetails(CompositionMoleculeInputDTO inputDTO){
        System.out.println(inputDTO.getIngredients());
        List<String> existingIngredientNames=getIngredientNames();
@@ -109,8 +119,8 @@ public class CompositionMoleculeService {
        List<String> ingredientNameList=ingredientDetailsList
                .stream().map(i->i.getName()).collect(Collectors.toList());
 
-       String moleculeName= Utils.createMoleculeName(ingredientNameList);
-       String compositionName=Utils.createCompositionName(ingredientDetailsList);
+       String moleculeName= CommonUtils.createMoleculeName(ingredientNameList);
+       String compositionName= CommonUtils.createCompositionName(ingredientDetailsList);
        if(existingMoleculeNames.indexOf(moleculeName)==-1){
            Molecule molecule=new Molecule();
            molecule.setName(moleculeName);
@@ -152,13 +162,17 @@ public class CompositionMoleculeService {
     }
 
 
-
+   // get a list of names of all the ingredients
    public List<String> getIngredientNames(){
      return ingredientsRepository.findAll().stream().map(t->t.getName()).collect(Collectors.toList());
    }
+
+   // get a list of names of all the molecules.
    public List<String> getMoleculeNames(){
         return moleculesRepository.findAll().stream().map(t->t.getName()).collect(Collectors.toList());
    }
+
+   // get a list of names of all the compositons.
    public List<String> getCompositeNames(){
         return compositionsRepository.findAll().stream().map(t->t.getName()).collect(Collectors.toList());
    }

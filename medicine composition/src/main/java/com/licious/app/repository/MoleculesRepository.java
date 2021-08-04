@@ -9,5 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface MoleculesRepository  extends JpaRepository<Molecule,Integer> {
+    // get molecule by molecule name
     public Optional<Molecule> findOneByName(String name);
 }

@@ -13,6 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class CompositionDetailsDTO implements Serializable {
+    /**
+     *  This DTO is an response DTO that holds composition details such as composition name,
+     *  list of all the ingredients, molecule name and molecule rx_required value.
+     */
     String compositionName;
     List<IngredientDetails> ingredientDetailsList;
     String moleculeName;

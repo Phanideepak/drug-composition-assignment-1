@@ -4,7 +4,11 @@ import com.licious.app.dto.IngredientDetails;
 
 import java.util.List;
 
-public class Utils {
+/*
+  This CommonUtils class provides the methods for generating molecule name and composition name
+  from the ingredient details.
+ */
+public class CommonUtils {
     public static String createMoleculeName(List<String> ingredientName){
         String moleculeName="";
         for(int i=0;i<ingredientName.size();i++){

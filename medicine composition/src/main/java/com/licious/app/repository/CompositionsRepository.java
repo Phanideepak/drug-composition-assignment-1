@@ -9,5 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface CompositionsRepository extends JpaRepository<Composition,Integer> {
+    // get composition by compostion name.
     public Optional<Composition> findOneByName(String name);
 }
