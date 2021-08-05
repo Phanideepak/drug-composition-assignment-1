@@ -8,6 +8,7 @@ import com.licious.app.repository.*;
 import com.licious.app.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Tuple;
 import java.util.ArrayList;
@@ -72,8 +73,9 @@ public class CompositionMoleculeService {
     }
 
     // get all composition that contains given ingredient and dosage.
+    @Transactional(readOnly = false)
     public List<Composition> getAllCompositionsFilteredByIngrediantDetails(String ingredientName, float strength,String unit){
-
+        System.out.println(ingredientsRepository.findOneByName(ingredientName).get());
         Ingredient ingredient=ingredientsRepository.findOneByName(ingredientName).get();
 
         int ingredientId=ingredient.getId();

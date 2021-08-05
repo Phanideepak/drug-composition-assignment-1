@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Composition {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,4 +22,13 @@ public class Composition {
     @JsonIgnore(true)
     //@Transient
     private List<CompositionIngredient> compositionIngredientList;
+
+
+    @Override
+    public String toString() {
+        return "Composition{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

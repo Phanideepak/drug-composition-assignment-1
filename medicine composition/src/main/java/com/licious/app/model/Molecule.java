@@ -22,6 +22,7 @@ public class Molecule {
 
     @OneToMany(mappedBy = "molecule",fetch = FetchType.LAZY)
     @JsonIgnore(true)
+    @ToString.Exclude
     //@Transient
     private List<MoleculeIngredient> moleculeIngredientList;
 }

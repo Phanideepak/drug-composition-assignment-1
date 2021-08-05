@@ -8,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "ingredients")
-@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -28,4 +27,12 @@ public class Ingredient {
     @JsonIgnore(true)
     //@Transient
     private List<MoleculeIngredient> moleculeIngredientList;
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
