@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -60,16 +61,19 @@ public class AppApplicationTests {
 
         // taking a existing composition from database for testing.
         String testcompositionName="paracetamol (200.0MG) + diclofenac (2.5MGG) + aspirin (2.0v/v)";
+
         Composition testComposition=compositionsService.getCompositionByName(testcompositionName);
+		int testCompositionId=testComposition.getId();
         assertNotNull(testComposition);
-        System.out.println(testComposition);
+
 
         //checking whether method related to api works or not
 		List<Composition> compositionList=compositionMoleculeService.
 				getAllCompositionsFilteredByIngrediantDetails(ingredientName,strength,unit);
-		System.out.println(compositionList);
+		List<Integer> compositionIds=compositionList.stream().map(t->t.getId()).collect(Collectors.toList());
 
-		boolean checkExpression=(compositionList.indexOf(testComposition)>0);
+
+		boolean checkExpression=(compositionIds.indexOf(testCompositionId)>0);
 
         assertTrue(checkExpression);
 

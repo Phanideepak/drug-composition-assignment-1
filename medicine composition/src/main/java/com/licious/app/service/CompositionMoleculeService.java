@@ -75,14 +75,11 @@ public class CompositionMoleculeService {
     // get all composition that contains given ingredient and dosage.
     @Transactional(readOnly = false)
     public List<Composition> getAllCompositionsFilteredByIngrediantDetails(String ingredientName, float strength,String unit){
-        System.out.println(ingredientsRepository.findOneByName(ingredientName).get());
         Ingredient ingredient=ingredientsRepository.findOneByName(ingredientName).get();
 
         int ingredientId=ingredient.getId();
-        System.out.println(ingredientId);
         List<Integer> compositionIds=compositionIngredientRepository.
                 findAllByIngredientStrengthUnit(ingredientId,strength,unit);
-        System.out.println(compositionIds);
         List<Composition> compositionList=new ArrayList<>();
         for(Integer compositionId: compositionIds){
             Composition composition=compositionsRepository.findById(compositionId).get();

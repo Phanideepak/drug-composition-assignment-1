@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,19 +21,15 @@ public class Ingredient {
 
     @OneToMany(mappedBy = "ingredient",fetch = FetchType.LAZY)
     @JsonIgnore(true)
+    @ToString.Exclude
     //@Transient
     private List<CompositionIngredient> compositionIngredientList;
 
     @OneToMany(mappedBy = "ingredient",fetch = FetchType.LAZY)
     @JsonIgnore(true)
+    @ToString.Exclude
     //@Transient
     private List<MoleculeIngredient> moleculeIngredientList;
 
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
+
 }
