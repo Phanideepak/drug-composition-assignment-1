@@ -1,5 +1,7 @@
 package com.licious.app.repository;
-
+/*
+  @author Doddaka Sai Phani Deepak
+ */
 import com.licious.app.model.Composition;
 import com.licious.app.model.Ingredient;
 import org.springframework.data.jpa.repository.JpaRepository;
