@@ -65,7 +65,7 @@ public class ServiceTests {
         List<Integer> compositionIds=compositionList.stream().map(t->t.getId()).collect(Collectors.toList());
 
 
-        boolean checkExpression=(compositionIds.indexOf(testCompositionId)>0);
+        boolean checkExpression=(compositionIds.indexOf(testCompositionId)>=0);
 
         assertTrue(checkExpression);
 
@@ -76,7 +76,7 @@ public class ServiceTests {
         String ingredientName="paracetamol";
         String unit="MG";
         float strength=200;
-        boolean rx_required=true;
+        boolean rx_required=false;
 
         // taking a existing composition from database for testing.
         String testcompositionName="paracetamol (200.0MG) + diclofenac (2.5MGG) + aspirin (2.0v/v)";
@@ -84,13 +84,15 @@ public class ServiceTests {
         int testCompositionId=testComposition.getId();
         assertNotNull(testComposition);
 
+
         //checking whether method related to api works or not
         List<Composition> compositionList=compositionMoleculeService
                 .getAllCompositionFilteredByIngredientMoleculeDetails(ingredientName,strength,unit,rx_required);
         List<Integer> compositionIds=compositionList.stream().map(t->t.getId()).collect(Collectors.toList());
 
-
-        boolean checkExpression=(compositionIds.indexOf(testCompositionId)>0);
+        System.out.println(compositionIds);
+        System.out.println(testCompositionId);
+        boolean checkExpression=(compositionIds.indexOf(testCompositionId)>=0);
 
         assertTrue(checkExpression);
     }

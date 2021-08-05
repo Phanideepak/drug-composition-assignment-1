@@ -96,6 +96,7 @@ public class CompositionMoleculeService {
     public List<Composition> getAllCompositionFilteredByIngredientMoleculeDetails(String ingredientName, float strength,String unit,
                                                                                   boolean rex_required){
         int ingredientId=ingredientsRepository.findOneByName(ingredientName).get().getId();
+        System.out.println(ingredientId);
         List<Integer> compositionIds=compositionIngredientRepository
                 .findAllCompositionsByIngredientMoleculeDetails(ingredientId,strength,unit,rex_required);
 
