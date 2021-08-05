@@ -19,7 +19,8 @@ public class Composition {
     private int id;
     private String name;
 
-    @OneToMany(mappedBy = "composition")
+    @OneToMany(mappedBy = "composition",fetch = FetchType.LAZY)
     @JsonIgnore(true)
+    //@Transient
     private List<CompositionIngredient> compositionIngredientList;
 }

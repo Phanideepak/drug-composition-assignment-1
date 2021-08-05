@@ -20,7 +20,8 @@ public class Molecule {
     private String name;
     private Boolean rx_required;
 
-    @OneToMany(mappedBy = "molecule")
+    @OneToMany(mappedBy = "molecule",fetch = FetchType.LAZY)
     @JsonIgnore(true)
+    //@Transient
     private List<MoleculeIngredient> moleculeIngredientList;
 }

@@ -33,6 +33,7 @@ public class CompositionMoleculeService {
         CompositionDetailsDTO compositionDetailsDTO=new CompositionDetailsDTO();
 
         String compositionName=compositionsRepository.findById(compositionId).get().getName();
+
         List<Tuple> ingredientDetailsTuple=compositionIngredientRepository.findAllIngredientByCompostionId(compositionId);
 
         List<IngredientDetails> ingredientDetailsList=ingredientDetailsTuple.stream()
@@ -72,9 +73,14 @@ public class CompositionMoleculeService {
 
     // get all composition that contains given ingredient and dosage.
     public List<Composition> getAllCompositionsFilteredByIngrediantDetails(String ingredientName, float strength,String unit){
-        int ingredientId=ingredientsRepository.findOneByName(ingredientName).get().getId();
+
+        Ingredient ingredient=ingredientsRepository.findOneByName(ingredientName).get();
+
+        int ingredientId=ingredient.getId();
+        System.out.println(ingredientId);
         List<Integer> compositionIds=compositionIngredientRepository.
                 findAllByIngredientStrengthUnit(ingredientId,strength,unit);
+        System.out.println(compositionIds);
         List<Composition> compositionList=new ArrayList<>();
         for(Integer compositionId: compositionIds){
             Composition composition=compositionsRepository.findById(compositionId).get();
@@ -90,6 +96,7 @@ public class CompositionMoleculeService {
         int ingredientId=ingredientsRepository.findOneByName(ingredientName).get().getId();
         List<Integer> compositionIds=compositionIngredientRepository
                 .findAllCompositionsByIngredientMoleculeDetails(ingredientId,strength,unit,rex_required);
+
         List<Composition> compositionList=new ArrayList<>();
         for(Integer compositionId: compositionIds){
             Composition composition=compositionsRepository.findById(compositionId).get();

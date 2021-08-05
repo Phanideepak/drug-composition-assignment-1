@@ -19,11 +19,13 @@ public class Ingredient {
     private int id;
     private String name;
 
-    @OneToMany(mappedBy = "ingredient")
+    @OneToMany(mappedBy = "ingredient",fetch = FetchType.LAZY)
     @JsonIgnore(true)
+    //@Transient
     private List<CompositionIngredient> compositionIngredientList;
 
-    @OneToMany(mappedBy = "ingredient")
+    @OneToMany(mappedBy = "ingredient",fetch = FetchType.LAZY)
     @JsonIgnore(true)
+    //@Transient
     private List<MoleculeIngredient> moleculeIngredientList;
 }
