@@ -2,12 +2,15 @@ package com.licious.app.controller;
 
 import com.licious.app.dto.request.CompositionMoleculeInputDTO;
 import com.licious.app.dto.response.CompositionDetailsDTO;
+import com.licious.app.dto.response.CompositionInsertionStatus;
 import com.licious.app.model.Composition;
 import com.licious.app.service.CompositionMoleculeService;
+import com.licious.app.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -69,13 +72,23 @@ public class CompositionMoleculeController {
       It is used to insert multiple different compositions.
      */
     @PostMapping(value = "/compositions/molecule",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String addCompositionMoleculeDetails(@RequestBody List<CompositionMoleculeInputDTO> inputRequestObjects){
+    public List<CompositionInsertionStatus> addCompositionMoleculeDetails(@RequestBody List<CompositionMoleculeInputDTO> inputRequestObjects){
         int flag=0;
+        List<CompositionInsertionStatus> responseArray=new ArrayList<>();
+
         for(CompositionMoleculeInputDTO inputDTO : inputRequestObjects){
-          String msg=compositionMoleculeService.addCompositonMoleculeDetails(inputDTO);
+          CompositionInsertionStatus compositionInsertionStatus=new CompositionInsertionStatus();
+
+          String compositionName= CommonUtils.createCompositionName(inputDTO.getIngredients()) ;
+          String msg=compositionMoleculeService.addCompositonMoleculeDetails(inputDTO,compositionName);
+
           if(msg=="success") flag=1;
-          System.out.println(msg);
+          compositionInsertionStatus.setCompositionName(compositionName);
+          compositionInsertionStatus.setInsertionStatus(msg);
+          responseArray.add(compositionInsertionStatus);
+
         }
-        return (flag==1)? "atleast one composition is added" : "no composition is added";
+
+        return responseArray;
     }
 }

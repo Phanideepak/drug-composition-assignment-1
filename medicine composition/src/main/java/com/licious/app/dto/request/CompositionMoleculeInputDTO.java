@@ -16,5 +16,6 @@ public class CompositionMoleculeInputDTO {
      *  This DTO is a request body and given as input from postman-client.
      * */
      private List<IngredientDetails> ingredients;
-     private boolean rex_required;
+     private boolean rx_required;
+
 }

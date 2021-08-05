@@ -98,11 +98,12 @@ public class CompositionMoleculeService {
         return compositionList;
     }
     // adding new compositions to the database.
-    public String addCompositonMoleculeDetails(CompositionMoleculeInputDTO inputDTO){
-       System.out.println(inputDTO.getIngredients());
+    public String addCompositonMoleculeDetails(CompositionMoleculeInputDTO inputDTO,String compositionName){
+       System.out.println(inputDTO);
        List<String> existingIngredientNames=getIngredientNames();
        List<String> existingMoleculeNames=getMoleculeNames();
        List<String> existingCompositionNames=getCompositeNames();
+       Boolean rx_required=inputDTO.isRx_required();
 
        List<IngredientDetails> ingredientDetailsList=inputDTO.getIngredients();
        for(IngredientDetails ingredient: ingredientDetailsList){
@@ -110,9 +111,13 @@ public class CompositionMoleculeService {
            float strength=ingredient.getStrength();
            String unit=ingredient.getUnit();
            if(existingIngredientNames.indexOf(ingredientName)==-1){
+               return "ingredient: "+ingredientName+" doesnot exist. Insertion of this composition failure";
+               /*
                Ingredient ingredient1=new Ingredient();
                ingredient1.setName(ingredientName);
                ingredientsRepository.save(ingredient1);
+
+                */
            }
 
        }
@@ -120,14 +125,20 @@ public class CompositionMoleculeService {
                .stream().map(i->i.getName()).collect(Collectors.toList());
 
        String moleculeName= CommonUtils.createMoleculeName(ingredientNameList);
-       String compositionName= CommonUtils.createCompositionName(ingredientDetailsList);
+
        if(existingMoleculeNames.indexOf(moleculeName)==-1){
            Molecule molecule=new Molecule();
            molecule.setName(moleculeName);
-           molecule.setRx_required(inputDTO.isRex_required());
+           molecule.setRx_required(rx_required);
+
            moleculesRepository.save(molecule);
        }
+
        Molecule molecule=moleculesRepository.findOneByName(moleculeName).get();
+       molecule.setRx_required(rx_required);
+       moleculesRepository.save(molecule);
+       System.out.println(rx_required);
+
        int moleculeId=molecule.getId();
        if(existingCompositionNames.indexOf(compositionName)>0) {
             return "composition already exists";
