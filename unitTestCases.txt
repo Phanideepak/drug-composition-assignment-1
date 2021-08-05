@@ -1,2 +1,96 @@
-Input 1: 
+Note: This test cases are tested on postman API. 
+TEST CASE 1: 
+
+	=>question 1.) When provided, a composition id/name provides its ingredients with their
+	corresponding strengths and units also return the molecule and its corresponding
+	rx_required.
+
+	api_url: http://localhost:8080/composition?compositionId=53
+
+	input: 53 (composition_id)
+
+	output: 
+
+	{
+	    "compositionName": "paracetamol (240.0MG) + diclofenac (4.5MGG) + aspirin (5.0v/v)",
+	    "ingredientDetailsList": [
+	        {
+	            "name": "paracetamol",
+	            "strength": 240.0,
+	            "unit": "MG"
+	        },
+	        {
+	            "name": "diclofenac",
+	            "strength": 4.5,
+	            "unit": "MGG"
+	        },
+	        {
+	            "name": "aspirin",
+	            "strength": 5.0,
+	            "unit": "v/v"
+	        }
+	    ],
+	    "moleculeName": "paracetamol + diclofenac + aspirin",
+	    "rx_required": true
+	}
+
+
+	=> question 2: Give all compositions where ingredient is X with strength S and unit U
+
+	api_url: http://localhost:8080/compositions?ingredientName=paracetamol&strength=200&unit=MG
+
+	input: 
+	      ingredientName=paracetamol
+	      strength=200
+	      unit=MG
+
+	output:
+			[
+			    {
+			        "id": 25,
+			        "name": "paracetamol (200.0MG) + diclofenac (2.5MGG)"
+			    },
+			    {
+			        "id": 36,
+			        "name": "paracetamol (200.0MG) + diclofenac (2.5MGG) + aspirin (2.0v/v)"
+			    }
+		    ]
+
+
+
+	=> question 3: Give all compositions where ingredient is X with strength S and unit U and
+                   rx_required is Y
+
+       api_url: http://localhost:8080/compositions/molecule?ingredientName=paracetamol&strength=200&unit=MG&rex_required=true
+
+       input:
+             ingredientName=paracetamol
+             strength=200
+             unit=MG
+             rex_required=true
+
+       output:
+		       [
+				    {
+				        "id": 36,
+				        "name": "paracetamol (200.0MG) + diclofenac (2.5MGG) + aspirin (2.0v/v)"
+				    },
+				    {
+				        "id": 25,
+				        "name": "paracetamol (200.0MG) + diclofenac (2.5MGG)"
+				    }
+		       ]
+
+
+
+TEST CASE 2:
+
+
+
+
+
+
+
+
+
 
