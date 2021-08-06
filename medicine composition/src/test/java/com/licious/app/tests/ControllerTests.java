@@ -1,4 +1,4 @@
-package com.licious.app;
+package com.licious.app.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.licious.app.controller.CompositionMoleculeController;
@@ -66,8 +66,6 @@ public class ControllerTests {
        CompositionDetailsDTO compositionDetailsDTO=new CompositionDetailsDTO();
        when(compositionMoleculeService.getCompositionDetailsByCompositionId(componentId))
                .thenReturn(compositionDetailsDTO);
-
-
 
 
        MultiValueMap<String,String> requestParams=new LinkedMultiValueMap<>();

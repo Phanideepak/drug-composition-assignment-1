@@ -96,4 +96,9 @@ public class ServiceTests {
 
         assertTrue(checkExpression);
     }
+
+    @Test
+    public void addNewCompositionDetails(){
+        
+    }
 }
