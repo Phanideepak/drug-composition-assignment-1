@@ -11,6 +11,7 @@ import com.licious.app.service.CompositionMoleculeService;
 import com.licious.app.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 /*
  It is a controller common for all api related operations on all entities.
  */
-@RestController
+@Controller
 public class CompositionMoleculeController {
     /* It is service common for all the entities. It handles implementation of
     *  required database operations depending on the api method requirements.
@@ -34,6 +35,7 @@ public class CompositionMoleculeController {
       molecule and rx_required value.
      */
     @GetMapping("/composition")
+    @ResponseBody
     public CompositionDetailsDTO getCompostionDetailsByCompostionId(@RequestParam int compositionId){
          return compositionMoleculeService.getCompositionDetailsByCompositionId(compositionId);
     }
@@ -44,6 +46,7 @@ public class CompositionMoleculeController {
      that  contains given ingredient in given dosage(strength).
      */
     @GetMapping("/compositions")
+    @ResponseBody
     public List<Composition> getCompositionByIngredientDetails(@RequestParam String ingredientName,
                                                                @RequestParam float strength,@RequestParam String unit
                                                                ){
@@ -58,6 +61,7 @@ public class CompositionMoleculeController {
     that  contains given ingredient in given dosage(strength) and molecule that has given rex_required value.
   */
     @GetMapping("/compositions/molecule")
+    @ResponseBody
     public List<Composition> getCompositionByIngredientMoleculeDetails(@RequestParam String ingredientName,
                                                                @RequestParam float strength,@RequestParam String unit
    ,@RequestParam boolean rex_required ){
@@ -75,6 +79,7 @@ public class CompositionMoleculeController {
       It is used to insert multiple different compositions.
      */
     @PostMapping(value = "/compositions/molecule",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public List<CompositionInsertionStatus> addCompositionMoleculeDetails(@RequestBody List<CompositionMoleculeInputDTO> inputRequestObjects){
         int flag=0;
         List<CompositionInsertionStatus> responseArray=new ArrayList<>();

@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class CompositionDetailsDTO implements Serializable {
     /**
      *  This DTO is an response DTO that holds composition details such as composition name,

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.Tuple;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,8 +36,8 @@ public class CompositionMoleculeService {
     //get details of all ingredients, molecule of given composition
     public CompositionDetailsDTO getCompositionDetailsByCompositionId(int compositionId){
         CompositionDetailsDTO compositionDetailsDTO=new CompositionDetailsDTO();
-
-        String compositionName=compositionsRepository.findById(compositionId).get().getName();
+        Composition composition=compositionsRepository.findById(compositionId).orElseThrow(()->new RuntimeException("Composition not exists"));
+        String compositionName=composition.getName();
 
         List<Tuple> ingredientDetailsTuple=compositionIngredientRepository.findAllIngredientByCompostionId(compositionId);
 
