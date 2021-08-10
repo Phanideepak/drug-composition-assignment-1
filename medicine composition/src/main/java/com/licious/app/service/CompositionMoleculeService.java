@@ -41,6 +41,7 @@ public class CompositionMoleculeService {
 
         List<Tuple> ingredientDetailsTuple=compositionIngredientRepository.findAllIngredientByCompostionId(compositionId);
 
+
         List<IngredientDetails> ingredientDetailsList=ingredientDetailsTuple.stream()
                 .map(t->new IngredientDetails(t.get(0,String.class),t.get(1,Float.class),t.get(2,String.class))).collect(Collectors.toList());
 
@@ -122,7 +123,7 @@ public class CompositionMoleculeService {
            float strength=ingredient.getStrength();
            String unit=ingredient.getUnit();
            if(existingIngredientNames.indexOf(ingredientName)==-1){
-               return "ingredient: "+ingredientName+" doesnot exist. Insertion of this composition failure";
+               return "ingredient: "+ingredientName+" does not exist. Insertion of this composition failure";
                /*
                Ingredient ingredient1=new Ingredient();
                ingredient1.setName(ingredientName);

@@ -10,7 +10,9 @@ import com.licious.app.model.Composition;
 import com.licious.app.service.CompositionMoleculeService;
 import com.licious.app.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,14 +47,15 @@ public class CompositionMoleculeController {
      This GET API takes ingredient name,strength,unit as parameter and returns the composition
      that  contains given ingredient in given dosage(strength).
      */
-    @GetMapping("/compositions")
+    @GetMapping(value="/compositions")
     @ResponseBody
     public List<Composition> getCompositionByIngredientDetails(@RequestParam String ingredientName,
-                                                               @RequestParam float strength,@RequestParam String unit
+                                                                              @RequestParam float strength, @RequestParam String unit
                                                                ){
         List<Composition> compositionList=compositionMoleculeService
                 .getAllCompositionsFilteredByIngrediantDetails(ingredientName,strength,unit);
         return compositionList;
+
     }
 
 

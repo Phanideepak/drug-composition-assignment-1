@@ -99,6 +99,6 @@ public class ServiceTests {
 
     @Test
     public void addNewCompositionDetails(){
-        
+
     }
 }

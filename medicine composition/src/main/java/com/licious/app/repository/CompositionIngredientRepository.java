@@ -18,6 +18,7 @@ public interface CompositionIngredientRepository extends JpaRepository<Compositi
     /*
      Getting ids of compositions that contain ingredient with given id, strength and units.
      */
+
     @Query(value="select distinct composition_id from composition_ingredients where ingredient_id=?1 and strength=?2 and unit=?3",
             nativeQuery = true)
     public List<Integer> findAllByIngredientStrengthUnit(int ingredientId, float Strength, String Unit);

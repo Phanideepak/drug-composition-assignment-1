@@ -5,6 +5,7 @@ package com.licious.app.utils;
 
 import com.licious.app.dto.IngredientDetails;
 
+import java.util.Collections;
 import java.util.List;
 
 /*
@@ -13,6 +14,7 @@ import java.util.List;
  */
 public class CommonUtils {
     public static String createMoleculeName(List<String> ingredientName){
+        Collections.sort(ingredientName);
         String moleculeName="";
         for(int i=0;i<ingredientName.size();i++){
             if(i!=ingredientName.size()-1)
@@ -23,6 +25,7 @@ public class CommonUtils {
         return  moleculeName;
     }
     public static String createCompositionName(List<IngredientDetails> ingredientDetailsList){
+        
          String compositionName="";
          for(int i=0;i<ingredientDetailsList.size();i++){
              if(i!=ingredientDetailsList.size()-1){

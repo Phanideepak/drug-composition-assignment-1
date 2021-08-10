@@ -6,6 +6,7 @@ import com.licious.app.repository.*;
 import com.licious.app.service.CompositionMoleculeService;
 //import org.junit.jupiter.api.Test;
 import com.licious.app.service.CompositionService;
+import com.licious.app.tests.ControllerTests;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
